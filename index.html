@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sajiko Aromin — Multimedia Designer</title>
+
+<!-- ============================================================
+  HOW TO EDIT THIS FILE:
+  1. Open this file in VS Code (free download: code.visualstudio.com)
+  2. Search for "EDIT:" comments to find every place you need to change
+  3. To add images: put your image files in the same folder as this HTML
+     then change src="YOUR_IMAGE.jpg" to your actual filename
+  4. To add videos: same as images, use src="YOUR_VIDEO.mp4"
+  5. Save and open in Chrome to preview
+  ============================================================ -->
+
+<!-- FONTS — no need to edit -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0e0b1a;
+    --bg2: #150f27;
+    --bg3: #1d1535;
+    --accent: #b57bee;
+    --accent2: #7c4dbd;
+    --accent3: #e8c8ff;
+    --gold: #f0c96b;
+    --text: #f0eaf8;
+    --muted: #8b7aa8;
+    --border: rgba(181,123,238,0.18);
+    --card: rgba(29,21,53,0.85);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  .cursor {
+    position: fixed; width: 10px; height: 10px;
+    background: var(--accent); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease; mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid rgba(181,123,238,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: rgba(14,11,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif; font-weight: 900;
+    font-size: 1.4rem; color: var(--accent3);
+    letter-spacing: 0.05em; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1000; opacity: 0.4;
+  }
+  /* HERO */
+  #home {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 8rem 4rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 70% 40%, rgba(124,77,189,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(181,123,238,0.12) 0%, transparent 50%);
+    z-index: 0;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(181,123,238,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(181,123,238,0.04) 1px, transparent 1px);
+    background-size: 60px 60px; z-index: 0;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+  .hero-tag {
+    display: inline-block; font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; color: var(--accent); letter-spacing: 0.25em;
+    text-transform: uppercase; border: 1px solid var(--border);
+    padding: 0.35rem 0.9rem; border-radius: 2px; margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900;
+    line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero-name .first { display: block; color: var(--text); }
+  .hero-name .last { display: block; color: var(--accent); }
+  .hero-role {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem); color: var(--muted);
+    margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+  }
+  .hero-desc {
+    font-size: 1rem; line-height: 1.75; color: var(--muted);
+    max-width: 480px; margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.9s 1s forwards;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--bg);
+    padding: 0.9rem 2rem; border-radius: 2px; font-size: 0.8rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s, transform 0.2s; cursor: none;
+  }
+  .btn-primary:hover { background: var(--accent3); transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1px solid var(--border); color: var(--muted);
+    padding: 0.9rem 2rem; border-radius: 2px; font-size: 0.8rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s, transform 0.2s; cursor: none;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .hero-float {
+    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+    z-index: 2; display: flex; flex-direction: column; gap: 1.2rem; align-items: flex-end;
+    opacity: 0; animation: fadeIn 1.2s 1.2s forwards;
+  }
+  .hero-stat { text-align: right; border-right: 2px solid var(--accent); padding-right: 1.2rem; }
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif; font-size: 2.2rem;
+    font-weight: 700; color: var(--accent3); line-height: 1;
+  }
+  .hero-stat .label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  /* SECTIONS */
+  section { padding: 7rem 4rem; position: relative; }
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 0.8rem; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+    line-height: 1.05; color: var(--text); margin-bottom: 3rem;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+  /* WORKS */
+  #works { background: var(--bg2); }
+  .works-filter { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .filter-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    padding: 0.5rem 1.2rem; border-radius: 2px; font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: none;
+    transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .work-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 4px;
+    overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; cursor: none;
+  }
+  .work-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(124,77,189,0.25); }
+  .work-thumb {
+    width: 100%; aspect-ratio: 16/9; background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .work-thumb img, .work-thumb video {
+    width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;
+  }
+  .work-card:hover .work-thumb img,
+  .work-card:hover .work-thumb video { transform: scale(1.04); }
+  .work-placeholder {
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: var(--muted); font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; text-align: center; padding: 1rem;
+  }
+  .work-placeholder .icon { font-size: 2rem; opacity: 0.4; }
+  .work-overlay {
+    position: absolute; inset: 0; background: rgba(14,11,26,0.7);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .work-card:hover .work-overlay { opacity: 1; }
+  .work-view-btn {
+    border: 1px solid rgba(255,255,255,0.6); color: white;
+    padding: 0.6rem 1.4rem; font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    text-decoration: none; cursor: none; transition: background 0.2s;
+  }
+  .work-view-btn:hover { background: var(--accent); border-color: var(--accent); }
+  .work-info { padding: 1.2rem 1.4rem; }
+  .work-cat { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .work-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+  .work-date { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .work-desc { font-size: 0.82rem; line-height: 1.6; color: var(--muted); }
+  /* CATEGORIES */
+  #categories { background: var(--bg); }
+  .cats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .cat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 4px;
+    padding: 2.5rem 2rem; position: relative; overflow: hidden; cursor: none;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .cat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .cat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent); transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+  }
+  .cat-card:hover::before { transform: scaleX(1); }
+  .cat-num { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: rgba(181,123,238,0.1); position: absolute; top: 1rem; right: 1.5rem; line-height: 1; }
+  .cat-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .cat-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; }
+  .cat-desc { font-size: 0.85rem; line-height: 1.7; color: var(--muted); }
+  .cat-count { margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  /* ABOUT */
+  #about { background: var(--bg2); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: start; }
+  .about-photo-wrap { position: relative; }
+  .about-photo-frame { aspect-ratio: 3/4; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .about-photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .about-photo-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; color: var(--muted); font-size: 0.8rem; text-align: center; padding: 2rem; }
+  .about-photo-placeholder .big-icon { font-size: 4rem; opacity: 0.3; }
+  .about-photo-deco { position: absolute; bottom: -1.5rem; right: -1.5rem; width: 80%; aspect-ratio: 3/4; border: 1px solid var(--accent); border-radius: 4px; z-index: -1; opacity: 0.3; }
+  .about-tag { position: absolute; bottom: 1.5rem; left: -1rem; background: var(--accent); color: var(--bg); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.6rem 1rem; border-radius: 2px; }
+  .about-intro { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.4rem; line-height: 1.6; color: var(--accent3); margin-bottom: 1.5rem; border-left: 3px solid var(--accent); padding-left: 1.5rem; }
+  .about-text { font-size: 0.95rem; line-height: 1.85; color: var(--muted); margin-bottom: 1.2rem; }
+  .skills-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .skill-tag { background: rgba(181,123,238,0.08); border: 1px solid var(--border); color: var(--text); padding: 0.4rem 1rem; border-radius: 2px; font-size: 0.78rem; transition: background 0.2s, border-color 0.2s; }
+  .skill-tag:hover { background: rgba(181,123,238,0.2); border-color: var(--accent); }
+  .contact-items { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem; }
+  .contact-item { display: flex; align-items: center; gap: 1rem; font-size: 0.88rem; color: var(--muted); }
+  .contact-icon { color: var(--accent); font-size: 1rem; width: 1.5rem; }
+  .contact-item a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .contact-item a:hover { color: var(--accent); }
+  /* OTHERS */
+  #others { background: var(--bg2); }
+  .others-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
+  .other-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; transition: border-color 0.3s, transform 0.3s; cursor: none; }
+  .other-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .other-cat { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .other-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+  .other-date { font-size: 0.73rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .other-desc { font-size: 0.8rem; line-height: 1.6; color: var(--muted); }
+  /* CONTACT */
+  #contact { background: var(--bg); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-blurb { font-size: 0.95rem; line-height: 1.85; color: var(--muted); margin-bottom: 2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+  .form-group label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .form-group input, .form-group textarea { background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 0.85rem 1rem; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; resize: vertical; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+  .form-submit { background: var(--accent); color: var(--bg); border: none; padding: 1rem 2.5rem; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; cursor: none; transition: background 0.2s, transform 0.2s; width: 100%; margin-top: 0.5rem; }
+  .form-submit:hover { background: var(--accent3); transform: translateY(-2px); }
+  /* FOOTER */
+  footer { background: var(--bg); border-top: 1px solid var(--border); padding: 3rem 4rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem; color: var(--accent3); }
+  .footer-cc { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-align: center; }
+  .footer-social { display: flex; gap: 1rem; }
+  .footer-social a { color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; font-family: 'DM Mono', monospace; transition: color 0.2s; }
+  .footer-social a:hover { color: var(--accent); }
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .sub-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 2rem; }
+    #home { padding: 7rem 2rem 4rem; }
+    .hero-float { display: none; }
+    .cats-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { padding: 2rem; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ============================================================
+  NAVIGATION BAR
+  EDIT: Change the links below if you rename sections
+  EDIT: Change "SA" to your preferred logo initials or text
+  ============================================================ -->
+<nav>
+  <a href="#home" class="nav-logo">SA</a>
+  <ul class="nav-links">
+    <li><a href="#works">Works</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#others">Others</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================
+  HERO / HOME SECTION
+  EDIT: Change the tag line, name, role, and description below
+  EDIT: Change the 3 stats (3+, 30+, 15+) to match your actual numbers
+  ============================================================ -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+
+    <!-- EDIT: Change this tagline -->
+    <div class="hero-tag">✦ Portfolio — BMMA 2026</div>
+
+    <!-- EDIT: Your name -->
+    <h1 class="hero-name">
+      <span class="first">SAJIKO</span>
+      <span class="last">AROMIN</span>
+    </h1>
+
+    <!-- EDIT: Your role/title -->
+    <p class="hero-role">Multimedia Designer & Visual Storyteller</p>
+
+    <!-- EDIT: Your short bio/description -->
+    <p class="hero-desc">
+      Creating purposeful digital experiences through graphic design, video editing,
+      and social media content — blending creativity with strategic communication.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#works" class="btn-primary">View My Works</a>
+      <a href="#about" class="btn-ghost">About Me</a>
+    </div>
+  </div>
+
+  <!-- EDIT: Update these 3 stats with your real numbers -->
+  <div class="hero-float">
+    <div class="hero-stat">
+      <div class="num">3+</div>
+      <div class="label">Years Experience</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">30+</div>
+      <div class="label">Clients Served</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">15+</div>
+      <div class="label">Projects</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  WORKS SECTION — YOUR PORTFOLIO GRID
+  HOW TO ADD AN IMAGE:
+    Replace the <div class="work-placeholder"> block with:
+    <img src="YOUR_FILENAME.jpg" alt="Project Title">
+
+  HOW TO ADD A VIDEO:
+    Replace the <div class="work-placeholder"> block with:
+    <video src="YOUR_FILENAME.mp4" autoplay muted loop playsinline></video>
+
+  HOW TO ADD A LINK to an external project:
+    Change href="#" in <a href="#" class="work-view-btn"> to your URL
+
+  data-cat controls which FILTER button shows/hides this card.
+  Options: graphic | video | social | branding | 3d
+  You can assign multiple: data-cat="graphic branding"
+  ============================================================ -->
+<section id="works">
+  <div class="reveal">
+    <span class="section-label">// 01 — Portfolio</span>
+    <h2 class="section-title">Best <em>Works</em></h2>
+  </div>
+
+  <div class="works-filter reveal">
+    <button class="filter-btn active" onclick="filterWorks('all',this)">All</button>
+    <button class="filter-btn" onclick="filterWorks('graphic',this)">Graphic Design</button>
+    <button class="filter-btn" onclick="filterWorks('video',this)">Video & Motion</button>
+    <button class="filter-btn" onclick="filterWorks('social',this)">Social Media</button>
+    <button class="filter-btn" onclick="filterWorks('branding',this)">Branding</button>
+    <button class="filter-btn" onclick="filterWorks('3d',this)">3D</button>
+  </div>
+
+  <div class="works-grid">
+
+    <!-- ======================================================
+      WORK CARD 1 — "24 Hours" Music Video
+      EDIT: Replace placeholder with your actual video file
+    ====================================================== -->
+    <div class="work-card reveal" data-cat="video">
+      <div class="work-thumb">
+        <!-- EDIT: Delete the div below and replace with:
+             <video src="24hrs_music_video.mp4" autoplay muted loop playsinline></video> -->
+        <div class="work-placeholder">
+          <span class="icon">🎬</span>
+          <span>Replace with your video<br><code style="color:var(--accent);font-size:0.65rem;">24hrs_music_video.mp4</code></span>
+        </div>
+        <div class="work-overlay">
+          <!-- EDIT: Change href="#" to a link if hosted online -->
+          <a href="#" class="work-view-btn">View Project</a>
+        </div>
+      </div>
+      <div class="work-info">
+        <!-- EDIT: Category label (shown in small text above title) -->
+        <div class="work-cat">Video / Motion</div>
+        <!-- EDIT: Project title -->
+        <div class="work-title">"24 Hours" Music Video</div>
+        <!-- EDIT: Date completed -->
+        <div class="work-date">2024 – 2025</div>
+        <!-- EDIT: 1-2 sentence description -->
+        <div class="work-desc">A self-directed short-form music video serving as a personal multimedia narrative piece, produced during BMMA coursework.</div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+      WORK CARD 2 — Lipstick Product Ad
+      EDIT: Replace placeholder with your actual video file
+    ====================================================== -->
+    <div class="work-card reveal" data-cat="3d">
+      <div class="work-thumb">
+        <!-- EDIT: Replace with: <video src="lipstick_ad.mp4" autoplay muted loop playsinline></video> -->
+        <div class="work-placeholder">
+          <span class="icon">💄</span>
+          <span>Replace with your video<br><code style="color:var(--accent);font-size:0.65rem;">lipstick_ad.mp4</code></span>
+        </div>
+        <div class="work-overlay"><a href="#" class="work-view-btn">View Project</a></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">3D Animation</div>
+        <div class="work-title">Lipstick Product Ad</div>
+        <div class="work-date">2024 – 2025</div>
+        <div class="work-desc">A 3D product animation rendered in Blender showcasing a cosmetic advertisement created for educational purposes.</div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+      WORK CARD 3 — Personal Logo Design
+      EDIT: Replace placeholder with your actual image file
+    ====================================================== -->
+    <div class="work-card reveal" data-cat="branding">
+      <div class="work-thumb">
+        <!-- EDIT: Replace with: <img src="personal_logo.png" alt="Personal Logo Design"> -->
+        <div class="work-placeholder">
+          <span class="icon">✦</span>
+          <span>Replace with your image<br><code style="color:var(--accent);font-size:0.65rem;">personal_logo.png</code></span>
+        </div>
+        <div class="work-overlay"><a href="#" class="work-view-btn">View Project</a></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Branding</div>
+        <div class="work-title">Personal Logo Design</div>
+        <div class="work-date">2024</div>
+        <div class="work-desc">A personal brand identity logo developed as a BMMA subject output, establishing visual identity foundations.</div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+      WORK CARD 4 — UC Dance Squad Merch
+      EDIT: Replace placeholder with your actual image file
+    ====================================================== -->
+    <div class="work-card reveal" data-cat="graphic branding">
+      <div class="work-thumb">
+        <!-- EDIT: Replace with: <img src="uc_dance_merch.png" alt="UC Dance Squad Merch"> -->
+        <div class="work-placeholder">
+          <span class="icon">👕</span>
+          <span>Replace with your image<br><code style="color:var(--accent);font-size:0.65rem;">uc_dance_merch.png</code></span>
+        </div>
+        <div class="work-overlay"><a href="#" class="work-view-btn">View Project</a></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Graphic Design / Merch</div>
+        <div class="work-title">UC Dance Squad Merch Design</div>
+        <div class="work-date">2023 – 2024</div>
+        <div class="work-desc">Graphic merchandise designs for the University of the Cordilleras Dance Squad covering apparel and promotional materials.</div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+      WORK CARD 5 — Real Estate Social Media Pack
+      EDIT: Replace placeholder with your actual image file
+    ====================================================== -->
+    <div class="work-card reveal" data-cat="social graphic">
+      <div class="work-thumb">
+        <!-- EDIT: Replace with: <img src="realestate_carousel.png" alt="Real Estate Social Media"> -->
+        <div class="work-placeholder">
+          <span class="icon">🏠</span>
+          <span>Replace with your image<br><code style="color:var(--accent);font-size:0.65rem;">realestate_carousel.png</code></span>
+        </div>
+        <div class="work-overlay"><a href="#" class="work-view-btn">View Project</a></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Social Media Design</div>
+        <div class="work-title">Real Estate Social Media Pack</div>
+        <div class="work-date">2026</div>
+        <div class="work-desc">Social media content suite for The Pace of Richmond — carousels, listing graphics, reels, and event posts across Facebook, Instagram, and LinkedIn.</div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+      WORK CARD 6 — PH Financial Services Design Suite
+      EDIT: Replace placeholder with your actual image file
+    ====================================================== -->
+    <div class="work-card reveal" data-cat="graphic">
+      <div class="work-thumb">
+        <!-- EDIT: Replace with: <img src="ph_financial_flyers.png" alt="PH Financial Design"> -->
+        <div class="work-placeholder">
+          <span class="icon">📄</span>
+          <span>Replace with your image<br><code style="color:var(--accent);font-size:0.65rem;">ph_financial_flyers.png</code></span>
+        </div>
+        <div class="work-overlay"><a href="#" class="work-view-btn">View Project</a></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Graphic Design</div>
+        <div class="work-title">PH Financial Services Design Suite</div>
+        <div class="work-date">2022 – 2026</div>
+        <div class="work-desc">10+ flyers, business card variants, posters, and social media graphics produced for a US-based financial firm with 30+ loan store branches.</div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+      WORK CARD 7 — Angel Investing Reels
+      EDIT: Replace placeholder with your actual video file
+    ====================================================== -->
+    <div class="work-card reveal" data-cat="video social">
+      <div class="work-thumb">
+        <!-- EDIT: Replace with: <video src="investment_reel.mp4" autoplay muted loop playsinline></video> -->
+        <div class="work-placeholder">
+          <span class="icon">📈</span>
+          <span>Replace with your video<br><code style="color:var(--accent);font-size:0.65rem;">investment_reel.mp4</code></span>
+        </div>
+        <div class="work-overlay"><a href="#" class="work-view-btn">View Project</a></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Video Editing / Reels</div>
+        <div class="work-title">Angel Investing Q&A Reels</div>
+        <div class="work-date">2025 – 2026</div>
+        <div class="work-desc">Short-form investment interview content edited for Play Money — isolating Q&A segments, adding captions, and removing fillers.</div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+      WORK CARD 8 — ADD YOUR OWN PROJECT HERE
+      EDIT: Fill in all fields below with your actual project
+    ====================================================== -->
+    <div class="work-card reveal" data-cat="graphic">
+      <div class="work-thumb">
+        <!-- EDIT: Replace with: <img src="YOUR_IMAGE.png" alt="Your Project Title"> -->
+        <div class="work-placeholder">
+          <span class="icon">🖼️</span>
+          <span>Add your own project<br><code style="color:var(--accent);font-size:0.65rem;">your_image.png</code></span>
+        </div>
+        <div class="work-overlay"><a href="#" class="work-view-btn">View Project</a></div>
+      </div>
+      <div class="work-info">
+        <!-- EDIT: Fill all of these in -->
+        <div class="work-cat">Your Category</div>
+        <div class="work-title">Your Project Title</div>
+        <div class="work-date">Month – Year</div>
+        <div class="work-desc">Your 1-2 sentence project description goes here.</div>
+      </div>
+    </div>
+
+    <!-- ======================================================
+      COPY AND PASTE THE BLOCK ABOVE TO ADD MORE PROJECTS
+      You need at least 15 total works per the rubric.
+      Just duplicate a card block and change the content.
+    ====================================================== -->
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+  CATEGORIES SECTION — TOP 3 SPECIALIZATIONS
+  EDIT: Change the title, description, and tags for each category
+  ============================================================ -->
+<section id="categories">
+  <div class="reveal">
+    <span class="section-label">// 02 — Specializations</span>
+    <h2 class="section-title">Top Three <em>Categories</em></h2>
+  </div>
+  <div class="cats-grid">
+
+    <!-- EDIT: Category 1 -->
+    <div class="cat-card reveal">
+      <div class="cat-num">01</div>
+      <div class="cat-icon">🎨</div>
+      <div class="cat-title">Graphic Design & Branding</div>
+      <div class="cat-desc">Creating visual identities, marketing collateral, and brand systems. From logo design to comprehensive print and digital material suites for businesses and organizations.</div>
+      <div class="cat-count">→ Flyers · Business Cards · Logos · Posters · Merch</div>
+    </div>
+
+    <!-- EDIT: Category 2 -->
+    <div class="cat-card reveal">
+      <div class="cat-num">02</div>
+      <div class="cat-icon">🎬</div>
+      <div class="cat-title">Video Editing & Motion</div>
+      <div class="cat-desc">Telling stories through moving image — from narrative short films to 3D product animations and short-form social media reels optimized for engagement.</div>
+      <div class="cat-count">→ Reels · Music Video · 3D Animation · Blender</div>
+    </div>
+
+    <!-- EDIT: Category 3 -->
+    <div class="cat-card reveal">
+      <div class="cat-num">03</div>
+      <div class="cat-icon">📱</div>
+      <div class="cat-title">Social Media Design</div>
+      <div class="cat-desc">Strategically crafted content for social platforms — balancing aesthetic consistency with platform-specific best practices to maximize reach and engagement.</div>
+      <div class="cat-count">→ Carousels · Event Posts · Listing Graphics · Captions</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+  ABOUT ME SECTION
+  EDIT: Replace the placeholder photo with your actual photo
+  EDIT: Update the bio paragraphs, skills list, and contact info
+  ============================================================ -->
+<section id="about">
+  <div class="reveal">
+    <span class="section-label">// 03 — About Me</span>
+    <h2 class="section-title">The <em>Designer</em></h2>
+  </div>
+  <div class="about-grid">
+
+    <div class="about-photo-wrap reveal">
+      <div class="about-photo-frame">
+        <!-- EDIT: Replace this entire div with:
+             <img src="your_photo.jpg" alt="Sajiko Aromin">
+             Make sure your photo file is in the same folder as this HTML -->
+        <div class="about-photo-placeholder">
+          <span class="big-icon">👤</span>
+          <span>Replace with your photo<br>
+            <code style="font-size:0.7rem;color:var(--accent);">
+              &lt;img src="your_photo.jpg" alt="Sajiko Aromin"&gt;
+            </code>
+          </span>
+        </div>
+      </div>
+      <div class="about-photo-deco"></div>
+      <!-- EDIT: Change this label if needed -->
+      <div class="about-tag">BMMA · UC Baguio</div>
+    </div>
+
+    <div class="reveal">
+      <!-- EDIT: Your personal quote -->
+      <p class="about-intro">"I design with intention — every visual choice is a communication decision."</p>
+
+      <!-- EDIT: Your bio paragraphs -->
+      <p class="about-text">
+        Hi, I'm <strong style="color:var(--text)">Sajiko D. Aromin</strong>, a Multimedia Designer and soon-to-be BMMA graduate from the University of the Cordilleras, Baguio City. I specialize in graphic design, video editing, and social media content creation — working remotely with clients across the US and the Philippines.
+      </p>
+      <p class="about-text">
+        With experience spanning real estate marketing, financial services branding, 3D animation, and live chat support, I thrive at the intersection of creative storytelling and strategic communication. I'm detail-oriented, self-managed, and adaptable in fast-paced environments.
+      </p>
+      <p class="about-text">
+        Currently pursuing my Bachelor in Multimedia Arts with an expected graduation of October 2026, while actively working as a Marketing Assistant for The Pace of Richmond, Virginia.
+      </p>
+
+      <div style="margin-top:2.5rem;">
+        <div class="skills-label">// Tools & Skills</div>
+        <!-- EDIT: Add or remove skills from this list -->
+        <div class="skills-wrap">
+          <span class="skill-tag">Adobe Illustrator</span>
+          <span class="skill-tag">Adobe Photoshop</span>
+          <span class="skill-tag">Canva</span>
+          <span class="skill-tag">CapCut</span>
+          <span class="skill-tag">Blender</span>
+          <span class="skill-tag">Meta Business Suite</span>
+          <span class="skill-tag">Mailchimp</span>
+          <span class="skill-tag">Brivity CRM</span>
+          <span class="skill-tag">HubSpot</span>
+          <span class="skill-tag">ClickUp</span>
+          <span class="skill-tag">Slack</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">WordPress / Wix</span>
+          <span class="skill-tag">Google Workspace</span>
+          <span class="skill-tag">Microsoft 365</span>
+          <span class="skill-tag">Copywriting</span>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);">
+        <div class="skills-label">// Contact Information</div>
+        <!-- EDIT: Your actual contact details -->
+        <div class="contact-items">
+          <div class="contact-item">
+            <span class="contact-icon">✉</span>
+            <a href="mailto:arominsajiko@gmail.com">arominsajiko@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">☏</span>
+            <span>+63 956 289 7052</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">⌂</span>
+            <span>#304 Hillside Rd, Baguio City, Philippines</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  OTHERS SECTION — ADDITIONAL MULTIMEDIA OUTPUTS
+  EDIT: Add more cards by copying the <div class="other-card"> block
+  EDIT: Add more subsections by copying the subsection block
+  ============================================================ -->
+<section id="others">
+  <div class="reveal">
+    <span class="section-label">// 04 — Additional Work</span>
+    <h2 class="section-title"><em>Other</em> Outputs</h2>
+  </div>
+
+  <!-- Subsection 1 -->
+  <div class="reveal">
+    <div class="sub-label">// Administrative & Digital Marketing</div>
+    <div class="others-grid">
+
+      <div class="other-card">
+        <div class="other-cat">Email Marketing</div>
+        <div class="other-title">Mailchimp Campaign Design</div>
+        <div class="other-date">2022 – 2026</div>
+        <div class="other-desc">Email newsletter templates and campaign materials for financial services clients.</div>
+      </div>
+
+      <div class="other-card">
+        <div class="other-cat">Web Management</div>
+        <div class="other-title">Website Backend Updates</div>
+        <div class="other-date">2022 – 2026</div>
+        <div class="other-desc">Handled backend updates for Flexible Finance Solution and Flex Payment Solution websites — graphics and content management.</div>
+      </div>
+
+      <div class="other-card">
+        <div class="other-cat">Data & Research</div>
+        <div class="other-title">CALAMI-T Project Documentation</div>
+        <div class="other-date">2022 – 2023</div>
+        <div class="other-desc">Field research data collection, cleaning, and academic documentation support for UC RSO study operations.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Subsection 2 -->
+  <div class="reveal">
+    <div class="sub-label">// Academic & Event Graphics</div>
+    <div class="others-grid">
+
+      <div class="other-card">
+        <div class="other-cat">Academic Design</div>
+        <div class="other-title">Seminar Certificates & Posters</div>
+        <div class="other-date">2022 – 2023</div>
+        <div class="other-desc">Design outputs for CALAMI-T seminars including certificates, event posters, and promotional graphics.</div>
+      </div>
+
+      <div class="other-card">
+        <div class="other-cat">Branding</div>
+        <div class="other-title">Project CALAMI-T Logo</div>
+        <div class="other-date">2022</div>
+        <div class="other-desc">Logo and visual identity design for the University of the Cordilleras RSO research project.</div>
+      </div>
+
+      <div class="other-card">
+        <div class="other-cat">Email Branding</div>
+        <div class="other-title">Email Signature Suite</div>
+        <div class="other-date">2022 – 2026</div>
+        <div class="other-desc">Professional email signatures for 30+ loan store branches under PH Financial Services, LLC.</div>
+      </div>
+
+      <!-- EDIT: Add more cards here by copying the block above -->
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  CONTACT SECTION
+  EDIT: Update the email and phone number
+  EDIT: The form currently shows a success message on submit.
+        To make it actually send emails, connect it to Formspree:
+        1. Go to formspree.io and create a free account
+        2. Create a form and get your endpoint URL
+        3. Change the form action: <form action="https://formspree.io/f/YOURCODE">
+  ============================================================ -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <span class="section-label">// 05 — Get In Touch</span>
+      <h2 class="section-title" style="margin-bottom:1.5rem;">Let's <em>Work</em><br>Together</h2>
+      <!-- EDIT: Update this blurb -->
+      <p class="contact-blurb">
+        Open to freelance projects, collaborations, and full-time remote opportunities in graphic design, video editing, and social media management. Based in Baguio City, working globally.
+      </p>
+      <div class="contact-items">
+        <!-- EDIT: Your email -->
+        <div class="contact-item"><span class="contact-icon">✉</span><a href="mailto:arominsajiko@gmail.com">arominsajiko@gmail.com</a></div>
+        <!-- EDIT: Your phone -->
+        <div class="contact-item"><span class="contact-icon">☏</span><span>+63 956 289 7052</span></div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Your name"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Your last name"></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"></div>
+      <div class="form-group"><label>Subject</label><input type="text" placeholder="What is this about?"></div>
+      <div class="form-group"><label>Message</label><textarea rows="5" placeholder="Tell me about your project..."></textarea></div>
+      <button class="form-submit" onclick="handleFormSubmit(event)">Send Message ✦</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+  FOOTER
+  EDIT: Update your social media links (replace # with your URLs)
+  EDIT: Update your name and the year if needed
+  ============================================================ -->
+<footer>
+  <div class="footer-logo">SAJIKO AROMIN</div>
+  <div class="footer-cc">
+    © 2026 Sajiko D. Aromin · All works protected under Creative Commons CC BY-NC-ND 4.0<br>
+    Bachelor in Multimedia Arts · University of the Cordilleras
+  </div>
+  <div class="footer-social">
+    <!-- EDIT: Replace # with your actual social media profile URLs -->
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+
+<script>
+// CUSTOM CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cursor.style.left = mx - 5 + 'px'; cursor.style.top = my - 5 + 'px';
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  ring.style.left = rx - 18 + 'px'; ring.style.top = ry - 18 + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a,button,.work-card,.cat-card,.other-card,.skill-tag').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2.5)'; ring.style.transform = 'scale(1.5)'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
+});
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// FILTER WORKS
+function filterWorks(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.work-card').forEach(card => {
+    const show = cat === 'all' || card.dataset.cat.includes(cat);
+    card.style.opacity = show ? '1' : '0';
+    card.style.display = show ? '' : 'none';
+  });
+}
+
+// CONTACT FORM
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const btn = e.target;
+  btn.textContent = 'Message Sent ✓';
+  btn.style.background = '#4caf50';
+  setTimeout(() => { btn.textContent = 'Send Message ✦'; btn.style.background = ''; }, 3000);
+}
+</script>
+</body>
+</html>
